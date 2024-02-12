@@ -1,0 +1,84 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<Model.Teacher>
+
+<br> 
+
+<div class="container d-none d-lg-block">
+    <div class="row">
+        <div class="col-sm-12 d-flex justify-content-between">
+            <h6 class="title pb-2">بهترین مدرسین ما</h6>
+        </div>
+    </div>
+</div>
+
+
+<div class="container my-3">
+    <div class="row">
+        @for (int item = 0; item < Model.Count(); item++)
+        {
+            @*<div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card custom-card mb-3">*@
+        <div class="col-md-3">
+            <div class="card custom-card mb-3">
+
+
+                <div class="card teacher-card">
+                    <img src="~/images/teachers/@Model[item].pic" alt="teacher" class="img-fluid card-img-top">
+                    <div class="card-body">
+                        <p class="card-text font-14 text-center">
+                            @Model[item].name  @Model[item].family
+                        </p><p class="card-text font-12  text-info text-center"> @Model[item].email </p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-center">
+                            <a href="#"><i class="fab fa-instagram ml-2 text-danger"></i></a>
+                            <a href="#"><i class="fab fa-telegram ml-2 text-primary"></i></a>
+                            <a href="#"><i class="fab fa-whatsapp ml-2 text-success"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        }
+
+    </div>
+</div>
+
+
+
+@*<div class="container d-none d-lg-block">
+    <div class="row mt-3 mb-5">
+
+
+        @for (int item = 0; item < Model.Count(); item++)
+        {
+
+            <div class="col-md-3">
+                <div class="card teacher-card">
+                    <img src="~/images/teachers/@Model[item].pic" alt="teacher" class="img-fluid card-img-top">
+                    <div class="card-body">
+                        <p class="card-text font-14 text-center">
+                            @Model[item].name  @Model[item].family
+                        </p><p class="card-text font-12  text-info text-center"> @Model[item].email </p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="text-center">
+                            <a href="#"><i class="fab fa-instagram ml-2 text-danger"></i></a>
+                            <a href="#"><i class="fab fa-telegram ml-2 text-primary"></i></a>
+                            <a href="#"><i class="fab fa-whatsapp ml-2 text-success"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>*@
+

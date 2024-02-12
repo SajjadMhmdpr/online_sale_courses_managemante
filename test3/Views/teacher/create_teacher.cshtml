@@ -1,0 +1,118 @@
+﻿
+@{
+    ViewData["Title"] = "create_techer";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+
+@section extraHead{
+
+
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/flag-icon/css/flag-icon.min.css">
+
+
+}
+
+<div class="row">
+    <div class="col s12">
+        <div id="html-validations" class="card card-tabs">
+            <div class="card-content">
+                <div class="card-title">
+                    <div class="row">
+                        <div class="col s12 m6 l10">
+                            <h4 class="card-title">ثبت استاد</h4>
+                        </div>
+                        <div class="col s12 m6 l2">
+                        </div>
+                    </div>
+                </div>
+                <div id="html-view-validations">
+
+                    <form asp-action="create" asp-controller="teacher"  method="post" enctype="multipart/form-data">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <label for="uname0">نام*</label>
+                                <input class="validate" id="name" name="name" type="text">
+                            </div>
+                            <div class="input-field col s12">
+                                <label for="uname0">فامیل*</label>
+                                <input class="validate" id="family" name="family" type="text">
+                            </div>
+                            <div class="input-field col s12">
+                                <label for="cemail0">ایمیل *</label>
+                                <input class="validate" id="email" name="email" type="email">
+                            </div>
+
+                          <div class="col m6 s12 file-field input-field">
+                                <div class="btn float-right">
+                                    <span>بارگذاری فایل</span>
+                                    <input type="file" id="pic" name="pic">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text" >
+                                </div>
+                            </div>
+
+                            <div class="input-field col s12">
+                            <button id="btnSend" class="btn waves-effect waves-light right iransans" type="submit" >
+                                    ارسال
+                                    <i class="material-icons right">send</i>
+                                </button>
+                            </div>
+                        </div>
+
+                        </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section script{
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            
+
+
+            /*$("#btnSend").click(function () {
+
+               
+
+                var formData;
+
+                formData = new FormData();
+                formData.append("name", $("#name").val());
+                //formData.append("family", $("#family").val());
+                formData.append("pic", $("#pic")[0].files[0]);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/teacher/create',
+                    data: formData,
+                    processData: false,
+                    contentType: false
+                });
+
+
+            });*/
+
+
+
+        });
+
+
+
+    </script>
+
+    <!-- END PAGE VENDOR JS-->
+
+    <!-- BEGIN PAGE LEVEL JS-->
+    <!-- END PAGE LEVEL JS-->
+
+}
+

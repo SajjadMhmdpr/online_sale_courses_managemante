@@ -1,0 +1,353 @@
+﻿
+@{
+    ViewData["Title"] = "showAll";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+
+@section extraHead{
+
+
+
+    <!-- BEGIN: VENDOR CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/flag-icon/css/flag-icon.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/data-tables/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/data-tables/extensions/responsive/css/responsive.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="~/app-assets/vendors/data-tables/css/select.dataTables.min.css">
+    <!-- END: VENDOR CSS-->
+    <!-- BEGIN: Page Level CSS-->
+    <link rel="stylesheet" type="text/css" href="~/app-assets/css/pages/data-tables.min.css">
+
+
+    <style>
+        #data-table-simple_length {
+            display: none;
+        }
+
+        #data-table-simple_filter {
+            display: none;
+        }
+    </style>
+
+
+}
+
+@model List<Model.Teacher>
+
+
+
+
+<div class="row">
+    <div class="col s12 m12 l12">
+        <div id="button-trigger" class="card card card-default scrollspy">
+            <div class="card-content">
+                <h4 class="card-title">به عنوان مثال جداول داده</h4>
+                <div class="row">
+                    <div class="col s12">
+
+                        <div>
+                            <div class="header-search-wrapper hide-on-med-and-down">
+
+                                <input class="header-search-input z-depth-2 iransans " id="searchBox" type="text" name="Search" placeholder="جست و جو..." data-search="template-list">
+
+                            </div>
+                        </div>
+
+                        <div>
+                            <button onclick="search()" id="bbtt" class="btn mb-1 mr-1 iransans" type="button" style="width:100%;">جست و جو</button>
+                        </div>
+
+                        <div id="modal1" class="modal">
+                            <div class="modal-content">
+
+
+                                <div id="html-view-validations">
+                                    <form asp-action="update" class="formValidate0" id="formEdit" method="post" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                <label for="uname0"></label>
+                                                <input class="validate" required="" id="fn" name="name" type="text">
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <label for="uname0"></label>
+                                                <input class="validate" required="" id="ln" name="family" type="text">
+                                            </div>
+                                            <div class="input-field col s12">
+                                                <label for="cemail0"></label>
+                                                <input class="validate" required="" id="em" type="email" name="email">
+                                            </div>
+
+
+                                            <div class="col m6 s12 file-field input-field">
+                                                <div class="btn float-right">
+                                                    <span>بارگذاری فایل</span>
+                                                    <input type="file" name="pic">
+                                                </div>
+                                                <div class="file-path-wrapper">
+                                                    <input id="pic" class="file-path validate" type="text" name="pic">
+                                                </div>
+                                            </div>
+
+                                            <div class="input-field col s12">
+                                                <button class="btn waves-effect waves-light right iransans modal-close" type="submit" name="action">
+                                                    ارسال
+                                                    <i class="material-icons right">send</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+
+
+                            @*<div class="modal-footer">
+                    <a href="#!" class="modal-action modal-close waves-effect waves-red btn-flat ">مخالف بودن</a>
+                    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">موافق بودن</a>
+                </div>*@
+                        </div>
+
+
+
+                    </div>
+
+              
+                    @*@await Component.InvokeAsync("TeacherTable")*@
+
+                    <div class="col s12" id="teacherList">
+                        <table id="data-table-simple" class="display" width="100%">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%">نام</th>
+                                    <th style="width:15%">فامیل</th>
+                                    <th style="width:20%">ایمیل</th>
+                                    <th style="width:20%">عکس</th>
+                                    <th style="width:20%;display:table-cell;">ویرایش</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{
+                                    foreach (var i in Model)
+                                    {
+                                        <tr>
+                                            <td style="display:none;">@i.id</td>
+                                            <td>@i.name</td>
+                                            <td>@i.family</td>
+                                            <td>@i.email</td>
+                                            <td><img src="~/images/teachers/@i.pic" style="width:50px;height:50px;" /></td>
+                                            <td>
+                                                <a data-target="modal1" @*href="#modal1"*@ class="btn-floating modal-trigger mb-1 btn-flat waves-effect waves-light pink accent-2 white-text btnEdit">
+                                                    <i class="material-icons">edit</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>نام</th>
+                                    <th>فامیل</th>
+                                    <th>ایمیل</th>
+                                    <th>عکس</th>
+                                    <th>ویرایش</th>
+
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+@section script{
+
+
+
+
+    <!-- BEGIN VENDOR JS-->
+    <!-- BEGIN PAGE VENDOR JS-->
+    <script src="~/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"></script>
+    <script src="~/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/app-assets/vendors/data-tables/js/dataTables.select.min.js"></script>
+    <script src="~/app-assets/js/scripts/data-tables.min.js"></script>
+
+    <!-- chips-->
+    <script src="~/app-assets/js/scripts/ui-chips.min.js"></script>
+    <!-- modals-->
+    <script src="~/app-assets/js/scripts/advance-ui-modals.min.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+            var currentRow;
+            var id;
+
+            String.prototype.toEnglishDigits = function () {
+                var num_dic = {
+
+                    '۹': 9,
+                    '۸': 8,
+                    '۷': 7,
+                    '۶': 6,
+                    '۵': 5,
+                    '۴': 4,
+                    '۳': 3,
+                    '۲': 2,
+                    '۱': 1,
+                    '۰': 0
+                };
+                return parseInt(this.replace(/([۰-۹])/g, function (w) {
+                    return num_dic[w];
+                }));
+            };
+
+            $(".btnEdit").click(function () {
+                //alert("ff");
+                currentRow = $(this).closest('tr');
+                id = currentRow.find("td:eq(0)").text().toEnglishDigits();
+
+                $('#fn').val(currentRow.find("td:eq(1)").text());
+                $('#ln').val(currentRow.find("td:eq(2)").text());
+                $('#em').val(currentRow.find("td:eq(3)").text());
+                $('#pic').val(currentRow.find("td:eq(4)").text());
+            });
+
+
+
+
+            $('Form#formEdit').submit(function (e) {
+
+                e.preventDefault();
+
+                var formData = new FormData(this);
+                formData.append("id", id);
+
+                //alert('khkhkh');
+
+
+                $.ajax({
+                    type: 'post',
+                    //url: '/teacher/update?Mt=' + formData, // karnemikone :/
+
+                    //enctype: 'multipart/form-data',
+
+                    //dataType: "json",
+                    url: '/teacher/update',
+                    data: formData,
+
+                    contentType: false,
+                    processData: false,
+
+                    //beforeSend: function () {
+                    //    alert('1');
+                    //},
+                    complete: function () {
+                        currentRow.find("td:eq(1)").text($('#fn').val());
+                        currentRow.find("td:eq(2)").text($('#ln').val());
+                        currentRow.find("td:eq(3)").text($('#em').val());
+                        var fileName = $('#pic').val().split('//').pop();
+                        currentRow.find('img').attr('src', '/images/teachers/' + fileName);
+
+                        //$('#modal1').modal('close');
+
+                    },
+                    //success: function () {  //hatman argoman bayad dashte bashad
+                    //    alert('3');
+                    //}
+                });
+
+            });
+
+
+
+            $('#bbtt').click(function () {
+                var s = $('#searchBox').val();
+                $.ajax(
+                    {
+                        url: '/teacher/search?s=' + s,
+                        /*data: { s: s },*/
+                        type: 'get',
+                        success: function (res) {
+                            $('#teacherList').html(res);
+                            /*$('#teacherList').val(res)*/
+                            //window.location = res;
+                        }
+                    });
+            });
+
+
+
+        });
+
+    </script>
+
+
+
+
+
+
+}
+
+
+
+
+<!--$.ajax(
+                    {
+                        type: 'POST',
+                        dataType: 'JSON',
+                        //data: JSON.stringify( s),
+                        //data: s,
+                        data: $('#searchBox').val(),-->
+@* url: "@Url.Action("search","teacher")",*@
+<!--url: '/teacher/search',
+
+        beforeSend: function () {
+            s = $('#searchBox').val();
+            alert(s);
+        },
+    success: function () {
+        alert('done');
+        alert(s);
+
+    }
+}
+);-->
+<!--$('#bbtt').click(function () {
+
+                var s = $('#searchBox').val();
+
+                $.ajax(
+                    {
+                        url: '/teacher/search',
+                        data: { s: s },
+                        type: 'get',-->
+@* url: "@Url.Action("search","teacher")",*@
+
+<!--success: function (res) {
+                $('#teacherList').html(res);
+                //window.location = res;
+
+            }
+
+
+
+
+});
+
+});-->

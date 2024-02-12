@@ -1,0 +1,150 @@
+﻿
+@{
+    ViewData["Title"] = "searchTableView";
+    Layout = null;
+}
+
+@model List<Model.Teacher>
+
+
+
+
+
+<div class="col s12">
+    <table id="data-table-simple" class="display" width="100%">
+        <thead>
+            <tr>
+                <th style="width:10%">نام</th>
+                <th style="width:15%">فامیل</th>
+                <th style="width:20%">ایمیل</th>
+                <th style="width:20%">عکس</th>
+                <th style="width:20%;display:table-cell;">ویرایش</th>
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @{
+                foreach (var i in Model)
+                {
+                    <tr>
+                        <td style="display:none;">@i.id</td>
+                        <td>@i.name</td>
+                        <td>@i.family</td>
+                        <td>@i.email</td>
+                        <td><img src="~/images/teachers/@i.pic" style="width:50px;height:50px;" />   </td>
+                        <td>
+                            <a data-target="modal1" @*href="#modal1"*@ class="btn-floating modal-trigger mb-1 btn-flat waves-effect waves-light pink accent-2 white-text btnEdit">
+                                <i class="material-icons">edit</i>
+                            </a>
+                        </td>
+
+                    </tr>
+                }
+            }
+
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>نام</th>
+                <th>فامیل</th>
+                <th>ایمیل</th>
+                <th>عکس</th>
+                <th>ویرایش</th>
+
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+
+<script src="~/app-assets/vendors/data-tables/js/jquery.dataTables.min.js"></script>
+<script src="~/app-assets/vendors/data-tables/extensions/responsive/js/dataTables.responsive.min.js"></script>
+<script src="~/app-assets/vendors/data-tables/js/dataTables.select.min.js"></script>
+<script src="~/app-assets/js/scripts/data-tables.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        var currentRow;
+        var id;
+
+        String.prototype.toEnglishDigits = function () {
+            var num_dic = {
+
+                '۹': 9,
+                '۸': 8,
+                '۷': 7,
+                '۶': 6,
+                '۵': 5,
+                '۴': 4,
+                '۳': 3,
+                '۲': 2,
+                '۱': 1,
+                '۰': 0
+            };
+            return parseInt(this.replace(/([۰-۹])/g, function (w) {
+                return num_dic[w];
+            }));
+        };
+
+        $(".btnEdit").click(function () {
+            //alert("ff");
+            currentRow = $(this).closest('tr');
+            id = currentRow.find("td:eq(0)").text().toEnglishDigits();
+
+            $('#fn').val(currentRow.find("td:eq(1)").text());
+            $('#ln').val(currentRow.find("td:eq(2)").text());
+            $('#em').val(currentRow.find("td:eq(3)").text());
+            $('#pic').val(currentRow.find("td:eq(4)").text());
+        });
+
+
+
+        $('Form#formEdit').submit(function (e) {
+
+            e.preventDefault();
+
+            var formData = new FormData(this);
+            formData.append("id", id);
+
+            //alert('khkhkh');
+
+
+            $.ajax({
+                type: 'post',
+                //url: '/teacher/update?Mt=' + formData, // karnemikone :/
+
+                //enctype: 'multipart/form-data',
+
+                //dataType: "json",
+                url: '/teacher/update',
+                data: formData,
+
+                contentType: false,
+                processData: false,
+
+                //beforeSend: function () {
+                //    alert('1');
+                //},
+                complete: function () {
+                    currentRow.find("td:eq(1)").text($('#fn').val());
+                    currentRow.find("td:eq(2)").text($('#ln').val());
+                    currentRow.find("td:eq(3)").text($('#em').val());
+                    var fileName = $('#pic').val().split('//').pop();
+                    currentRow.find('img').attr('src', '/images/teachers/' + fileName);
+
+                    $('#modal1').modal('close');
+
+                },
+                //success: function () {  //hatman argoman bayad dashte bashad
+                //    alert('3');
+                //}
+            });
+
+        });
+    });
+</script>

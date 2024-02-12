@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model List<Model.Course>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 d-flex justify-content-between">
+            <h6 class="title pb-2">جدیدترین دوره های آموزشی</h6>
+        </div>
+    </div>
+</div>
+
+<div class="container my-3">
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="card custom-card mb-3">
+                    <div class="sub-layer">
+                        @{
+                            if (item.banner != null)
+                            {
+                                <img src="@item.banner" class="img-fluid" alt="@item.title">
+
+                            }
+                            else
+                            {
+                                <img src="~/images/404.jpg" class="img-fluid" alt="404">
+
+                            }
+                        }
+                        <div class="over-layer">
+                            <a asp-action="Details" asp-controller="Course" asp-route-id="@item.id" class="btn btn-primary"> مشاهده و خرید </a>
+                            <span class="badge badge-secondary badge-pill"> 50 <i class="fa fa-shopping-basket pr-1"></i></span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <a href="course.html" class="card-link">آموزش @item.title</a>
+                        <p class="text-justify card-text vazir font-14 mt-3">
+                            @item.descript
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="badge badge-primary badge-pill pt-1">0%</span>
+                        <div class="float-left">
+                            @*<del class="text-muted font-13">
+                                @item.price تومان</del>*@
+                            <small class="text-success mr-2">@item.price تومان</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+
+
+
+
+
+
+
+    </div>
+</div>
